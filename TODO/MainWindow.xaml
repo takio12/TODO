@@ -6,7 +6,43 @@
         xmlns:local="clr-namespace:TODO"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
+    <Window.DataContext>
+        <local:ViewModel x:Name="viewModel"></local:ViewModel>
+    </Window.DataContext>
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="16"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="16"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="70"></ColumnDefinition>
+            <ColumnDefinition Width="300"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Background="#FFEEAA00" Text="TODO"/>
+        <TextBox Grid.Row="0" Grid.Column="1" Width="250" HorizontalAlignment="Left" Text="{Binding Title}"></TextBox>
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="DeadLine" VerticalAlignment="Center" Background="#FFEEAA00"></TextBlock>
+        <DatePicker  Grid.Row="1" Grid.Column="1"  Width="200" HorizontalAlignment="Left" SelectedDate="{Binding Deadline}"></DatePicker>
+        <Button Grid.Row="3" Grid.Column="1" Command="{Binding AddCommand}" Height="20" Width="70"  Content="追加" HorizontalAlignment="Right"></Button>
+
+        <ListBox Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" x:Name="listbox" Height="200" Width="350" HorizontalAlignment="Center" ItemsSource="{Binding TaskList}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="250"></ColumnDefinition>
+                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <CheckBox Grid.Column="0" IsChecked="{Binding Done}" Content="{Binding Title}"/>
+                        <TextBlock Grid.Column="1" Text="{Binding Deadline ,StringFormat=yyyy/MM/dd}" />
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Button Grid.Row="6" Grid.Column="1" Command="{Binding DoneCommand}" Height="20" Width="70"  Content="完了" HorizontalAlignment="Right"></Button>
     </Grid>
 </Window>
